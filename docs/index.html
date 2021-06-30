@@ -18,6 +18,7 @@
     <script src="js/vue.js"></script>
     <script src="js/bootstrap-vue.min.js"></script>
     <script src="js/bootstrap-vue-icons.min.js"></script>
+    <script src="js/dexie.js"></script>
 
     <script src="js/ethers-5.2.umd.min.js"></script>
     <script src="js/highlight.min.js"></script>
@@ -74,6 +75,9 @@
                       <b-form-select size="sm" v-model="facing" :options="facingOptions"></b-form-select>
                     </div>
                     <div class="pl-1">
+                      <b-form-checkbox size="sm" v-model="displayOwned">Owned</b-form-checkbox>
+                    </div>
+                    <div class="pl-1">
                       {{ getBananaSearchResultsRows }}/{{ getBananaTotalSupply }}
                     </div>
                     <div class="pr-1 flex-grow-1">
@@ -92,8 +96,6 @@
                   <div v-if="view == 'cards'">
                     <b-card-group deck>
                       <div v-for="record in getBananaSearchResultsPage">
-                        <!-- <b-card body-class="p-1 d-flex align-items-end justify-content-center" img-bottom img-center header-class="p-1" footer-class="p-2" style="width: 10rem; height: 12.2rem;" img-top class="m-1 p-0 text-center text-bottom position-relative"> -->
-                        <!-- <b-card body-class="p-1 d-flex align-items-end justify-content-center" style="width: 10rem; height: 14rem;" class="mt-1"> -->
                         <b-card body-class="p-1" header-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                           <template #header>
                             <span variant="secondary" class="small truncate">
@@ -103,12 +105,6 @@
                           <b-link :href="record.permalink + '?ref=0x000001f568875F378Bf6d170B790967FE429C81A'" v-b-popover.hover="'View on OpenSea.io'" target="_blank">
                             <b-img-lazy width="100%" :src="record.osimage" />
                           </b-link>
-
-                          <!--
-                          <template #footer>
-                            {{ getFooter(slumDoge, rescueIndex) }}
-                          </template>
-                          -->
                         </b-card>
                       </div>
                     </b-card-group>
@@ -128,7 +124,7 @@
               <b-tab active title="My Wallet">
                 <b-card-text>
                   <b-button :disabled="!connected" variant="outline-success" @click="retrieveData">Retrieve Data</b-button>
-                  {{ owned }}
+                  {{ bananasOwned }}
                 </b-card-text>
               </b-tab>
 
@@ -137,14 +133,6 @@
                   References:
 
                     * Blah
-                    <!--
-                    <b-link href="https://mooncatrescue.com/adopt.html" target="_blank">https://mooncatrescue.com/adopt.html</b-link>
-                    <br />
-                    <br />
-                    <b-link href="https://github.com/ponderware/mooncatparser/blob/master/mooncatparser.js" target="_blank">https://github.com/ponderware/mooncatparser/blob/master/mooncatparser.js</b-link>
-                    <br />
-                    <b-link href="https://github.com/bokkypoobah/MoonCatExplainer" target="_blank">https://github.com/bokkypoobah/MoonCatExplainer</b-link>
-                    -->
                 </b-card-text>
               </b-tab>
             </b-tabs>
@@ -153,14 +141,13 @@
       </b-container>
     </div>
 
-    <!-- Start running app -->
     <script>
       window.app = new Vue({
         el: '#app',
         data: {
           connected: false,
           account: null,
-          owned: {},
+          bananasOwned: [],
           tabIndex: 0,
           abortSearch: false,
           searchString: '',
@@ -183,7 +170,8 @@
             { value: 'left', text: 'Left Only' },
             { value: 'right', text: 'Right Only' },
           ],
-          view: 'list', // 'cards',
+          displayOwned: false,
+          view: 'list',
           viewOptions: [
             { value: 'cards', text: 'Cards' },
             { value: 'list', text: 'List' },
@@ -200,13 +188,6 @@
             { key: 'mouth', label: 'mouth', sortable: true },
             { key: 'eyes', label: 'eyes', sortable: true },
             { key: 'headGear', label: 'headGear', sortable: true },
-            // { key: 'attributes', label: 'attributes' },
-            // d.background = background;
-            // d.bananaBase = bananaBase;
-            // d.mouth = mouth;
-            // d.eyes = eyes;
-            // d.headGear = headGear;
-            // d.signatureSeries = signatureSeries;
           ],
         },
         computed: {
@@ -255,8 +236,11 @@
               d.headGear = headGear;
               d.signatureSeries = signatureSeries;
 
-              if (i == 1842) {
-                console.log(JSON.stringify(d, null, 2));
+              d.owned = this.bananasOwned[i] && this.bananasOwned[i].length > 0;
+              if (/*i == 991842 || */ d.owned) {
+                console.log("this.bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
+                console.log("this.bananasOwned[i]: " + JSON.stringify(this.bananasOwned[i], null, 2));
+                console.log(JSON.stringify(d).toString(200));
               }
 
               results.push(d);
@@ -268,10 +252,22 @@
           },
           getBananaSearchResults() {
             let results1 = [];
-            if (this.searchString != null && this.searchString.length > 0) {
-              const s = this.searchString.toLowerCase();
+            if (this.displayOwned) {
               for (let i in this.getBananaData) {
                 const d = this.getBananaData[i];
+                if (d.owned) {
+                  results1.push(d);
+                }
+              }
+            } else {
+              results1 = this.getBananaData;
+            }
+
+            let results2 = [];
+            if (this.searchString != null && this.searchString.length > 0) {
+              const s = this.searchString.toLowerCase();
+              for (let i in result1) {
+                const d = result1[i];
                 if (d.tokenId == this.searchString ||
                   (d.name && d.name.toLowerCase().includes(s)) ||
                   (d.signatureSeries && d.signatureSeries.toLowerCase().includes(s)) ||
@@ -280,28 +276,28 @@
                   (d.mouth && d.mouth.toLowerCase().includes(s)) ||
                   (d.eyes && d.eyes.toLowerCase().includes(s)) ||
                   (d.headGear && d.headGear.toLowerCase().includes(s))) {
-                  results1.push(d);
-                }
-              }
-            } else {
-              results1 = this.getBananaData;
-            }
-            let results2;
-            if (this.facing != null) {
-              results2 = [];
-              for (let i in results1) {
-                const d = results1[i];
-                if ((this.facing == 'left' && d.facing == 'Left') ||
-                  (this.facing == 'right' && d.facing == 'Right')) {
                   results2.push(d);
                 }
               }
-
             } else {
               results2 = results1;
             }
+            let results3;
+            if (this.facing != null) {
+              results3 = [];
+              for (let i in results2) {
+                const d = results2[i];
+                if ((this.facing == 'left' && d.facing == 'Left') ||
+                  (this.facing == 'right' && d.facing == 'Right')) {
+                  results3.push(d);
+                }
+              }
 
-            return results2;
+            } else {
+              results3 = results2;
+            }
+
+            return results3;
           },
           getBananaSearchResultsPage() {
             const currentPage = this.searchCurrentPage;
@@ -328,6 +324,19 @@
                 }
               }
               this.connected = true;
+              const provider = new ethers.providers.Web3Provider(window.ethereum);
+              const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
+              const tokensOfOwner = await banana.tokensOfOwner(this.account);
+              console.log(tokensOfOwner);
+              const bananasOwned = {};
+              for (let i in tokensOfOwner) {
+                let t = tokensOfOwner[i];
+                console.log(t);
+                bananasOwned[t.toString()] = this.account;
+              }
+              this.bananasOwned = bananasOwned;
+              console.log(JSON.stringify(this.bananasOwned, null, 2));
+              localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));              
             }
           },
           disconnect() {
@@ -337,7 +346,7 @@
             console.log("retrieveData");
             const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-            const moonCatRescue = new ethers.Contract(MOONCATRESCUEADDRESS, MOONCATRESCUEABI, provider);
+            // const moonCatRescue = new ethers.Contract(MOONCATRESCUEADDRESS, MOONCATRESCUEABI, provider);
             // const totalSupply = await moonCatRescue.totalSupply();
             // console.log("retrieveData: execWeb3() moonCatRescue.totalSupply: " + totalSupply.toString());
             // const rescueIndex = await moonCatRescue.rescueIndex();
@@ -350,45 +359,59 @@
             // } catch (e) {
             //   console.log(e.getMessage);
             // }
-
-            let owned = {};
-            let attempts = 1;
-            let success = false;
-            do {
-              try {
-                console.log("Retrieving owners, attempt: " + attempts);
-                const owners = await moonCatRescue.getCatOwners();
-                const a = this.account.toString();
-                for (let i = 0; i < owners.length; i++) {
-                  const o = owners[i].toString().toLowerCase();
-                  if (!a.localeCompare(o)) {
-                    owned[i] = { rescueIndex: i, owner: o, contract: 'Original' };
-                  }
-                }
-                success = true;
-              } catch (e) {
-                console.log(e.getMessage);
-              }
-            } while (!success && attempts++ <= 10);
-
-            const acclimatedMoonCat = new ethers.Contract(ACCLIMATEDMOONCATADDRESS, ACCLIMATEDMOONCATABI, provider);
-            const tokensIdsByOwner = await acclimatedMoonCat.tokensIdsByOwner(this.account);
-            for (let i = 0; i < tokensIdsByOwner.length; i++) {
-              const rescueIndex = tokensIdsByOwner[i].toString();
-              owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Acclimated' };
+            const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
+            const tokensOfOwner = await banana.tokensOfOwner(this.account);
+            console.log(tokensOfOwner);
+            const bananasOwned = {};
+            for (let i in tokensOfOwner) {
+              let t = tokensOfOwner[i];
+              console.log(t);
+              bananasOwned[t.toString()] = this.account;
             }
+            this.bananasOwned = bananasOwned;
+            console.log(JSON.stringify(this.bananasOwned, null, 2));
+            localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
 
-            // Testing
-            const account = "0x1c46718463877607b620aa26d10e75bc771ba24e";
-            const wrappedMoonCat = new ethers.Contract(WRAPPEDMOONCATADDRESS, WRAPPEDMOONCATABI, provider);
-            const balanceOf = await wrappedMoonCat.balanceOf(account);
-            for (let i = 0; i < balanceOf; i++) {
-              const tokenOfOwnerByIndex = await wrappedMoonCat.tokenOfOwnerByIndex(account, i);
-              const catId = await wrappedMoonCat._tokenIDToCatID(tokenOfOwnerByIndex);
-              const rescueIndex = this.getMoonCatCatIdToRescueIndex[catId];
-              owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Wrapped' };
-            }
-            this.owned = owned;
+            // const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
+            // console.log(bananaNamesOfOwner);
+
+            // let owned = {};
+            // let attempts = 1;
+            // let success = false;
+            // do {
+            //   try {
+            //     console.log("Retrieving owners, attempt: " + attempts);
+            //     const owners = await moonCatRescue.getCatOwners();
+            //     const a = this.account.toString();
+            //     for (let i = 0; i < owners.length; i++) {
+            //       const o = owners[i].toString().toLowerCase();
+            //       if (!a.localeCompare(o)) {
+            //         owned[i] = { rescueIndex: i, owner: o, contract: 'Original' };
+            //       }
+            //     }
+            //     success = true;
+            //   } catch (e) {
+            //     console.log(e.getMessage);
+            //   }
+            // } while (!success && attempts++ <= 10);
+            //
+            // const acclimatedMoonCat = new ethers.Contract(ACCLIMATEDMOONCATADDRESS, ACCLIMATEDMOONCATABI, provider);
+            // const tokensIdsByOwner = await acclimatedMoonCat.tokensIdsByOwner(this.account);
+            // for (let i = 0; i < tokensIdsByOwner.length; i++) {
+            //   const rescueIndex = tokensIdsByOwner[i].toString();
+            //   owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Acclimated' };
+            // }
+
+            // // Testing
+            // const account = "0x1c46718463877607b620aa26d10e75bc771ba24e";
+            // const wrappedMoonCat = new ethers.Contract(WRAPPEDMOONCATADDRESS, WRAPPEDMOONCATABI, provider);
+            // const balanceOf = await wrappedMoonCat.balanceOf(account);
+            // for (let i = 0; i < balanceOf; i++) {
+            //   const tokenOfOwnerByIndex = await wrappedMoonCat.tokenOfOwnerByIndex(account, i);
+            //   const catId = await wrappedMoonCat._tokenIDToCatID(tokenOfOwnerByIndex);
+            //   const rescueIndex = this.getMoonCatCatIdToRescueIndex[catId];
+            //   owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Wrapped' };
+            // }
           },
           showModal() {
             var searchSeed = "8363e7eaae8e35b1c2db100a7b0fb9db1bc604a35ce1374d882690d0b1d888e2";
@@ -411,7 +434,12 @@
           }
         },
         mounted() {
-          hljs.highlightAll();
+          if (localStorage.getItem('bananasOwned')) {
+            console.log("mounted: setting bananasOwned");
+            this.bananasOwned = JSON.parse(localStorage.getItem('bananasOwned'));
+          }
+          console.log("mounted: bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
+          // hljs.highlightAll();
         }
       })
     </script>
