@@ -68,7 +68,7 @@
                 <b-card-text>
                   <div class="d-flex m-0 p-0" style="height: 37px;">
                     <div>
-                      <b-form-input type="text" size="sm" v-model.trim="searchString" debounce="600" placeholder="Search..." v-b-popover.hover="'Search by tokenId'"></b-form-input>
+                      <b-form-input type="text" size="sm" v-model.trim="searchString" debounce="600" placeholder="Search..." v-b-popover.hover="'Search by tokenId or any attribute value'"></b-form-input>
                     </div>
                     <div class="pl-1">
                       <b-form-select size="sm" v-model="searchYear" :options="searchYearOptions"></b-form-select>
@@ -271,12 +271,17 @@
           getBananaSearchResults() {
             let results = [];
             if (this.searchString != null && this.searchString.length > 0) {
+              const s = this.searchString.toLowerCase();
               for (let i in this.getBananaData) {
                 const d = this.getBananaData[i];
-                // if (d.rescueIndex == this.searchString || d.catId.includes(this.searchString) || d.rescued.block == this.searchString || d.rescued.tx.includes(this.searchString) || d.rescued.by.includes(this.searchString) || d.colour.includes(this.searchString)) {
-                //   results1.push(d);
-                // }
-                if (d.tokenId == this.searchString || d.name.includes(this.searchString)) {
+                if (d.tokenId == this.searchString ||
+                  (d.name && d.name.toLowerCase().includes(s)) ||
+                  (d.signatureSeries && d.signatureSeries.toLowerCase().includes(s)) ||
+                  (d.background && d.background.toLowerCase().includes(s)) ||
+                  (d.bananaBase && d.bananaBase.toLowerCase().includes(s)) ||
+                  (d.mouth && d.mouth.toLowerCase().includes(s)) ||
+                  (d.eyes && d.eyes.toLowerCase().includes(s)) ||
+                  (d.headGear && d.headGear.toLowerCase().includes(s))) {
                   results.push(d);
                 }
               }
