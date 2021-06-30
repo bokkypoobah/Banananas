@@ -71,7 +71,7 @@
                       <b-form-input type="text" size="sm" v-model.trim="searchString" debounce="600" placeholder="Search..." v-b-popover.hover="'Search by tokenId or any attribute value'"></b-form-input>
                     </div>
                     <div class="pl-1">
-                      <b-form-select size="sm" v-model="searchYear" :options="searchYearOptions"></b-form-select>
+                      <b-form-select size="sm" v-model="facing" :options="facingOptions"></b-form-select>
                     </div>
                     <div class="pl-1">
                       {{ getBananaSearchResultsRows }}/{{ getBananaTotalSupply }}
@@ -181,14 +181,11 @@
             { value: 4444, text: '4,444/p' },
             { value: 8888, text: '8,888/p' },
           ],
-          searchYear: null,
-          searchYearOptions: [
-            { value: null, text: 'All' },
-            { value: 2017, text: '2017' },
-            { value: 2018, text: '2018' },
-            { value: 2019, text: '2019' },
-            { value: 2020, text: '2020' },
-            { value: 2021, text: '2021' },
+          facing: null,
+          facingOptions: [
+            { value: null, text: 'Left and Right' },
+            { value: 'left', text: 'Left Only' },
+            { value: 'right', text: 'Right Only' },
           ],
           view: 'list', // 'cards',
           viewOptions: [
@@ -274,7 +271,7 @@
             return BANANADATA.length;
           },
           getBananaSearchResults() {
-            let results = [];
+            let results1 = [];
             if (this.searchString != null && this.searchString.length > 0) {
               const s = this.searchString.toLowerCase();
               for (let i in this.getBananaData) {
@@ -287,13 +284,28 @@
                   (d.mouth && d.mouth.toLowerCase().includes(s)) ||
                   (d.eyes && d.eyes.toLowerCase().includes(s)) ||
                   (d.headGear && d.headGear.toLowerCase().includes(s))) {
-                  results.push(d);
+                  results1.push(d);
                 }
               }
             } else {
-              results = this.getBananaData;
+              results1 = this.getBananaData;
             }
-            return results;
+            let results2;
+            if (this.facing != null) {
+              results2 = [];
+              for (let i in results1) {
+                const d = results1[i];
+                if ((this.facing == 'left' && d.facing == 'Left') ||
+                  (this.facing == 'right' && d.facing == 'Right')) {
+                  results2.push(d);
+                }
+              }
+
+            } else {
+              results2 = results1;
+            }
+
+            return results2;
           },
           getBananaSearchResultsPage() {
             const currentPage = this.searchCurrentPage;
