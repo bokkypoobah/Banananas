@@ -1,13 +1,13 @@
-# Bananas
+# Banananas
 
-See https://bokkypoobah.github.io/Bananas/
+See https://bokkypoobah.github.io/Banananas/
 
 
 <br />
 
 ## Scraped "Static" Data
 
-### Bananaas API Server
+### Boring Bananas API Server
 
 The script [scripts/01_getIndividualJSONs.sh](scripts/01_getIndividualJSONs.sh) retrieves the JSON files from `https://www.boringbananas.co/api/{tokenId}`.
 
@@ -147,4 +147,4 @@ You may find this data useful for your projects.
 
 Enjoy!
 
-(c) BokkyPooBah / Bok Consulting Pty Ltd - Jun 30 2019. The MIT Licence.
+(c) BokkyPooBah / Bok Consulting Pty Ltd - Jun 30 2019. The MIT Licence. Not affiliated with Boring Bananas Co.
