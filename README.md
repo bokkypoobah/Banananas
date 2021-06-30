@@ -108,6 +108,7 @@ const BANANADATA=[
     "tokenId": 0,
     "name": "#0",
     "image": "https://gateway.pinata.cloud/ipfs/Qme4bfYh3jnPFvLwLYFxWYkSQoym72M5ZgGRZzqiTPuLuK",
+    "osimage": "https://lh3.googleusercontent.com/suqHN-z-s8dWibjOYT2ciNqyYY6vKN8mbd-odZpsegC5cAuZ4_j2A9xa92ZdImvfiqsPN2rSfsaUlcjQiejp3U6B4nUcJtQNclzx_w",
     "description": "BoringBananasCo is a community-centered enterprise focussed on preserving our research about the emerging reports that several banana species have begun exhibiting strange characteristics following the recent worldwide pandemic. Our research team located across the globe has commenced efforts to study and document these unusual phenomena. Concerned about parties trying to suppress our research, the team has opted to store our findings on the blockchain to prevent interference. Although this is a costly endeavour, our mission has never been clearer. The fate of the world's bananas depends on it.",
     "attributes": [
       {
