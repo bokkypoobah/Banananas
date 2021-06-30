@@ -130,7 +130,7 @@
               </b-tab>
               -->
 
-              <b-tab active title="Search MoonCats">
+              <b-tab active title="Search Bananssaas">
                 <b-card-text>
                   <div class="d-flex m-0 p-0" style="height: 37px;">
                     <div>
@@ -140,7 +140,7 @@
                       <b-form-select size="sm" v-model="searchYear" :options="searchYearOptions"></b-form-select>
                     </div>
                     <div class="pl-1">
-                      {{ getMoonCatDataSearchResultsRows }}/{{ getMoonCatEffectiveTotalSupply }}
+                      {{ getBananaSearchResultsRows }}/{{ getBananaTotalSupply }}
                     </div>
                     <div class="pr-1 flex-grow-1">
                     </div>
@@ -354,6 +354,9 @@
         computed: {
           getBananaData() {
             return BANANADATA;
+          },
+          getBananaTotalSupply() {
+            return BANANADATA.length;
           },
           getBananaSearchResults() {
             return this.getBananaData;
