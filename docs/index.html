@@ -21,6 +21,7 @@
 
     <script src="js/ethers-5.2.umd.min.js"></script>
     <script src="js/highlight.min.js"></script>
+    <script src="bananaData.min.js"></script>
     <script src="moonCatData.min.js"></script>
     <script src="mooncatfunctions.js"></script>
     <script src="js/mooncatparser.js"></script>
@@ -130,7 +131,7 @@
                 </b-card-text>
               </b-tab>
 
-              <b-tab title="Search MoonCats">
+              <b-tab active title="Search MoonCats">
                 <b-card-text>
                   <div class="d-flex m-0 p-0" style="height: 37px;">
                     <div>
@@ -157,6 +158,8 @@
                       <b-form-select size="sm" v-model="searchPerPage" :options="searchPerPageOptions"></b-form-select>
                     </div>
                   </div>
+
+                  {{ getBananaData[0] }}
 
                   <div v-if="view == 'cards'">
                     <b-card-group deck>
@@ -359,6 +362,9 @@
           ],
         },
         computed: {
+          getBananaData() {
+            return BANANADATA;
+          },
           getCatIdGenesis() {
             if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 4) {
               return this.catId.substring(2, 4);
