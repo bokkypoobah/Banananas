@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <title>MoonCat Explainer</title>
+    <title>Bananas</title>
 
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="css/bootstrap-vue.min.css"/>
@@ -51,26 +51,10 @@
         <div>
           <b-navbar variant="light">
             <b-navbar-brand to="./" variant="primary">
-              MoonCat Explainer
+              Bananas
             </b-navbar-brand>
-            <img src="images/MoonCat_721.png" @click="loadCat('0x0093bb08b0')" class="ml-3" style="max-width: 40px;" alt="MoonCat #721" v-b-popover.hover.bottom="'#721: Princess Leia Peach ❤️s U'" />
-            <img src="images/MoonCat_668.png" @click="loadCat('0x00b558a094')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #668" v-b-popover.hover.bottom="'#668: For #Ethernity 🚀🚀🚀'"/>
-            <img src="images/MoonCat_11195.png" @click="loadCat('0x00d2a820dd')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #11195" v-b-popover.hover.bottom="'#11195: Yertle'"/>
-            <img src="images/MoonCat_10038.png" @click="loadCat('0x008b97ae78')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #10038" v-b-popover.hover.bottom="'#10038: Horton'"/>
-            <img src="images/MoonCat_25313.png" @click="loadCat('0x0015d5a6ec')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #25313" v-b-popover.hover.bottom="'#25313: Gertrude McFuzz'"/>
-            <img src="images/MoonCat_7849.png" @click="loadCat('0x002a571a1c')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #7849" v-b-popover.hover.bottom="'#7849: Red Fish'"/>
-            <img src="images/MoonCat_10694.png" @click="loadCat('0x00ee32a2f1')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #10694" v-b-popover.hover.bottom="'#10694: Flummox'"/>
-            <img src="images/MoonCat_22770.png" @click="loadCat('0x002cf2b803')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #22770" v-b-popover.hover.bottom="'#22770: Bartholomew Cubbins'"/>
-            <img src="images/MoonCat_10181.png" @click="loadCat('0x00745aa560')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #10181" v-b-popover.hover.bottom="'#10181: Goo-Goose'"/>
-            <img src="images/MoonCat_18998.png" @click="loadCat('0x004e8ad2f4')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #18998" v-b-popover.hover.bottom="'#18998: Blue Fish'"/>
-            <img src="images/MoonCat_7561.png" @click="loadCat('0x00a9552bd9')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #7561" v-b-popover.hover.bottom="'#7561: Mack'"/>
-            <img src="images/MoonCat_12764.png" @click="loadCat('0x009e1feed0')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #12764" v-b-popover.hover.bottom="'#12764: Sam-I-Am'"/>
-            <img src="images/MoonCat_15097.png" @click="loadCat('0x009c19ba20')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #15097" v-b-popover.hover.bottom="'#15097: The Grinch'"/>
-            <img src="images/MoonCat_16892.png" @click="loadCat('0x007eb837b1')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #16892" v-b-popover.hover.bottom="'#16892: The Whos'"/>
-            <img src="images/MoonCat_21173.png" @click="loadCat('0x0038b44bb0')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #21173" v-b-popover.hover.bottom="'#21173: The Whos'"/>
-            <img src="images/MoonCat_5793.png" @click="loadCat('0x00bc8e1c51')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #5793" v-b-popover.hover.bottom="'#5793: Mr Knox'"/>
-            <img src="images/MoonCat_13074.png" @click="loadCat('0x002e8f280c')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #13074" v-b-popover.hover.bottom="'#13074: Thing 1'"/>
-            <img src="images/MoonCat_21428.png" @click="loadCat('0x004d3b32cc')"  style="max-width: 40px; margin-top: -4px;" alt="MoonCat #21428" v-b-popover.hover.bottom="'#21428: Thing 2'"/>
+            <img src="images/Banana_2952_nobg.png" class="ml-3" style="max-width: 40px;" alt="Banana #2952" v-b-popover.hover.bottom="'Banana #2952'" />
+            <img src="images/Banana_636_nobg.png" class="ml-3" style="max-width: 40px;" alt="Banana #636" v-b-popover.hover.bottom="'Banana #636'" />
             <b-navbar-nav class="ml-auto">
               <b-button size="sm" variant="outline-primary" class="ml-4" v-b-popover.hover="'Power up this app'" @click="connect();" v-if="!connected">Connect to Web3</b-button>
               <b-button size="sm" variant="outline-primary" class="ml-4" v-b-popover.hover="'Power down this app'" @click="disconnect();" v-if="connected">Disconnect from {{ account.substring(0, 10) }}</b-button>
