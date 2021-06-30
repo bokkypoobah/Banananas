@@ -66,69 +66,6 @@
         <div>
           <b-card no-body class="mt-1">
             <b-tabs card v-model="tabIndex">
-              <!--
-              <b-tab title="MoonCat Details">
-                <b-card-text>
-                  <img :src="generateMoonCatImage(catId, 4)" />
-
-                  <b-form-group
-                    horizontal
-                    :label-cols="4"
-                    description="e.g., 0x0093bb08b0 for MoonCat #721"
-                    label="Enter catId"
-                  >
-                    <b-form-input v-model.trim="catId"></b-form-input>
-                  </b-form-group>
-
-                  getCatIdGenesis: {{ getCatIdGenesis }} <br />
-                  getCatIdK: {{ getCatIdK }} <br />
-                  getCatIdR: {{ getCatIdR }} <br />
-                  getCatIdG: {{ getCatIdG }} <br />
-                  getCatIdB: {{ getCatIdB }} <br />
-                  getCatIdRGB: {{ getCatIdRGB }} <br />
-                  <table>
-                    <tr>
-                      <td :bgcolor="getCatIdRGB" style="width: 25px; text-align: center; vertical-align: middle;">{{ getCatIdRGB }}</td>
-                    </tr>
-                  </table>
-
-                  getCatIdInverted: {{ getCatIdInverted }} <br />
-                  getCatIdDesign:<br />
-                  <table>
-                    <tr v-for="row in getCatIdDesign">
-                      <template v-for="col in row">
-                        <td :bgcolor="getCatIdColours[col]" style="width: 25px; text-align: center; vertical-align: middle;">{{ col }}</td>
-                      </template>
-                    </tr>
-                  </table>
-                  getCatIdDesignTransposed:<br />
-                  <table>
-                    <tr v-for="row in getCatIdDesignTransposed">
-                      <template v-for="col in row">
-                        <td :bgcolor="getCatIdColours[col]" style="width: 25px; text-align: center; vertical-align: middle;">{{ col }}</td>
-                      </template>
-                    </tr>
-                  </table>
-                  <br />
-                  getCatIdColours:<br />
-                  <table>
-                    <tr>
-                      <template v-for="(n, index) in 6">
-                        <td style="width: 25px; text-align: center; vertical-align: middle;">{{ index + ':' + (getCatIdColours[index] == null ? 'null' : getCatIdColours[index]) }}</td>
-                      </template>
-                    </tr>
-                    <tr>
-                      <template v-for="(n, index) in 6">
-                        <td :bgcolor="getCatIdColours[index]" style="width: 25px; text-align: center; vertical-align: middle;">{{ index + ':' + (getCatIdColours[index] == null ? 'null' : getCatIdColours[index]) }}</td>
-                      </template>
-                    </tr>
-                  </table>
-                  <br />
-                  getCatIdData:<br />
-                   {{ getCatIdData }} <br />
-                </b-card-text>
-              </b-tab>
-              -->
 
               <b-tab active title="Search Bananssaas">
                 <b-card-text>
@@ -190,97 +127,10 @@
                           <b-img-lazy width="100%" :src="data.item.osimage" />
                         </b-link>
                       </template>
-                      <!--
-                      <template #cell(catId)="data">
-                        <b-link @click="loadCat(data.item.catId)" v-b-popover.hover="'View details'" class="card-link">{{ data.item.catId }}</b-link><br />
-                        <b-link :href="'https://mooncat.pro/' + data.item.catId + '/'" v-b-popover.hover="'View on MoonCat.pro'" target="_blank">mcp</b-link>
-                        <b-link :href="'https://rarity.tools/mooncats/view/' + data.item.rescueIndex" v-b-popover.hover="'View on MoonCat.pro'" target="_blank">rt</b-link>
-                      </template>
-                      <template #cell(cat)="data">
-                        <div v-if="displayAcclimated">
-                          <b-link @click="loadCat(data.item.catId)" v-b-popover.hover="'View details'" class="card-link">
-                            <b-img-lazy width="140%" :src="'https://api.mooncat.community/glow-image/' + data.item.catId" />
-                          </b-link>
-                        </div>
-                        <div v-else>
-                          <b-link @click="loadCat(data.item.catId)" v-b-popover.hover="'View details'" class="card-link">
-                            <b-img-lazy width="100%" :src="generateMoonCatImage(data.item.catId, 4)" />
-                          </b-link>
-                        </div>
-                      </template>
-                      <template #cell(rescued)="data">
-                        Block: <b-link :href="'https://etherscan.io/block/' + data.item.rescued.block" class="card-link" target="_blank">{{ data.item.rescued.block }}</b-link><br />
-                        Tx: <b-link :href="'https://etherscan.io/tx/' + data.item.rescued.tx" class="card-link" target="_blank">{{ data.item.rescued.tx.substring(0, 12) + '...' }}</b-link><br />
-                        By: <b-link :href="'https://etherscan.io/address/' + data.item.rescued.by" class="card-link" target="_blank">{{ data.item.rescued.by.substring(0, 12) + '...' }}</b-link><br />
-                        At: {{ new Date(data.item.rescued.timestamp * 1000).toUTCString() }}
-                      </template>
-                      <template #cell(k)="data">
-                        {{ data.item.catId.substring(4, 6) }} => [{{ data.item.kBits.join() }}]<br />
-                        Inverted: {{ data.item.kInverted }}<br />
-                        Facing: {{ data.item.kFacing }}<br />
-                        FaceDetails: {{ data.item.kFaceDetails }}<br />
-                        FurPattern: {{ data.item.kFurPattern }}<br />
-                        Pose: {{ data.item.kPose }}<br />
-                      </template>
-                      <template #cell(hsl)="data">
-                         h: {{ data.item.hsl == null ? 'n/a' : data.item.hsl[0].toFixed(2) }}<br />
-                         s: {{ data.item.hsl == null ? 'n/a' : data.item.hsl[1].toFixed(3) }}<br />
-                         l: {{ data.item.hsl == null ? 'n/a' : data.item.hsl[2].toFixed(3) }}<br />
-                         {{ data.item.colour }}
-                      </template>
-                      -->
                     </b-table>
                   </div>
                 </b-card-text>
               </b-tab>
-
-              <!--
-              <b-tab title="All 256 Designs">
-                <b-card-text>
-                  <p>128 designs + the same 128 designs with colours inverted</p>
-                  <img :src="generateMoonCatImage(catId, 4)" />
-                  <b-form-group
-                    horizontal
-                    :label-cols="4"
-                    description="e.g., 0x0093bb08b0 for MoonCat #721"
-                    label="Enter catId"
-                  >
-                    <b-form-input v-model.trim="catId"></b-form-input>
-                  </b-form-group>
-                  <b-form-checkbox size="sm" v-model="displayAcclimated" v-b-popover.hover="'Use Acclimated MoonCat images instead of generating the images from the catId'" class="pt-1">Acclimated</b-form-select>
-                  <div v-for="(n, index) in 128" :key="index">
-                    <b-card-group deck>
-                      <b-card style="width: 10rem; height: 14rem;" class="mt-1">
-                        <template #header>
-                          <span variant="secondary" class="small truncate">
-                            {{ catIdWithK(index) }}
-                          </span>
-                        </template>
-                        <div v-if="displayAcclimated">
-                          <b-img-lazy width="140%" :src="'https://api.mooncat.community/glow-image/' + catIdWithK(index)" />
-                        </div>
-                        <div v-else>
-                          <b-img-lazy width="100%" :src="generateMoonCatImage(catIdWithK(index), 4)" />
-                        </div>
-                      </b-card>
-                      <b-card style="width: 10rem; height: 14rem;" class="mt-1">
-                        <template #header>
-                          <span variant="secondary" class="small truncate">
-                            {{ catIdWithK(index + 128) }}
-                          </span>
-                        </template>
-                        <div v-if="displayAcclimated">
-                          <b-img-lazy width="140%" :src="'https://api.mooncat.community/glow-image/' + catIdWithK(index + 128)" />
-                        </div>
-                        <div v-else>
-                          <b-img-lazy width="100%" :src="generateMoonCatImage(catIdWithK(index + 128), 4)" />
-                        </div>
-                      </b-card>
-                    </b-card-group>
-                  </div>
-                </b-card-text>
-              </b-tab>
-              -->
 
               <b-tab title="My Wallet">
                 <b-card-text>
@@ -319,8 +169,6 @@
           account: null,
           owned: {},
           tabIndex: 0,
-          catId: '0x0093bb08b0',
-          searchSteps: null,
           abortSearch: false,
           searchString: '',
           searchCurrentPage: 1,
@@ -351,10 +199,19 @@
             { key: 'tokenId', label: 'tokenId' },
             { key: 'name', label: 'name' },
             { key: 'image', label: 'image' },
+            { key: 'signatureSeries', label: 'signatureSeries' },
+            { key: 'background', label: 'background' },
+            { key: 'bananaBase', label: 'bananaBase' },
+            { key: 'mouth', label: 'mouth' },
+            { key: 'eyes', label: 'eyes' },
+            { key: 'headGear', label: 'headGear' },
             { key: 'attributes', label: 'attributes' },
-            // { key: 'tx', label: 'tx' },
-            // { key: 'by', label: 'by' },
-            // { key: 'timestamp', label: 'date' },
+            // d.background = background;
+            // d.bananaBase = bananaBase;
+            // d.mouth = mouth;
+            // d.eyes = eyes;
+            // d.headGear = headGear;
+            // d.signatureSeries = signatureSeries;
           ],
         },
         computed: {
@@ -362,6 +219,7 @@
             const results = [];
             for (let i in BANANADATA) {
               const d = BANANADATA[i];
+              let signatureSeries = null;
               let background = null;
               let bananaBase = null;
               let mouth = null;
@@ -380,9 +238,12 @@
                   eyes = a.value;
                 } else if (a.trait_type == 'Head Gear') {
                   headGear = a.value;
+                } else if (a.trait_type == 'Signature Series') {
+                  signatureSeries = a.value;
                 }
               }
-              if (background == null || bananaBase == null || mouth == null || eyes == null || headGear == null) {
+              if (!signatureSeries && (background == null || bananaBase == null || mouth == null || eyes == null || headGear == null)) {
+                console.log("signatureSeries: " + signatureSeries);
                 console.log("tokenId: " + i);
                 console.log("d: " + JSON.stringify(d));
                 console.log("background: " + background);
@@ -391,7 +252,15 @@
                 console.log("eyes: " + eyes);
                 console.log("headGear: " + headGear);
               }
-              if (i == 636) {
+
+              d.background = background;
+              d.bananaBase = bananaBase;
+              d.mouth = mouth;
+              d.eyes = eyes;
+              d.headGear = headGear;
+              d.signatureSeries = signatureSeries;
+
+              if (i == 636 || i == 8412) {
                 console.log(JSON.stringify(d, null, 2));
               }
 
@@ -427,240 +296,6 @@
           getBananaSearchResultsRows() {
             return this.getBananaSearchResults.length;
           },
-
-          getCatIdGenesis() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 4) {
-              return this.catId.substring(2, 4);
-            }
-            return null;
-          },
-          getCatIdK() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 6) {
-              return this.catId.substring(4, 6);
-            }
-            return null;
-          },
-          getCatIdR() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 8) {
-              return this.catId.substring(6, 8);
-            }
-            return null;
-          },
-          getCatIdG() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 10) {
-              return this.catId.substring(8, 10);
-            }
-            return null;
-          },
-          getCatIdB() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 12) {
-              return this.catId.substring(10, 12);
-            }
-            return null;
-          },
-          getCatIdRGB() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 12) {
-              return '#' + this.catId.substring(6, 12);
-            }
-            return null;
-          },
-          getCatIdInverted() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 6) {
-              const k = parseInt(this.catId.substring(4, 6), 16) % 128;
-              return k >= 128;
-            }
-            return null;
-          },
-          getCatIdDesign() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 6) {
-              const k = parseInt(this.catId.substring(4, 6), 16) % 128;
-              return moonCatDesigns[k].split(".");
-            }
-            return null;
-          },
-          getCatIdDesignTransposed() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 6) {
-              const k = parseInt(this.catId.substring(4, 6), 16) % 128;
-              const design = moonCatDesigns[k].split(".");
-              const rows = design[0].length;
-              const cols = design.length;
-              const output = [];
-              for (let row = 0; row < rows; row++) {
-                const line = [];
-                for (let col = 0; col < cols; col++) {
-                  line.push(design[col][row]);
-                }
-                output.push(line);
-              }
-              return output;
-            }
-            return null;
-          },
-          getCatIdColours() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 12) {
-              return getMoonCatColors(this.catId);
-            }
-            return null;
-          },
-          getCatIdData() {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 12) {
-              const results = moonCatParser(this.catId);
-              return results;
-            }
-            return null;
-          },
-          getMoonCatTotalSupply() {
-            return moonCatTotalSupply;
-          },
-          getMoonCatEffectiveTotalSupply() {
-            // totalSupply is 25,440 consisting of:
-            // - 25,600 - 256 = 25,344 rescued mooncats
-            // - 5 x 16 = 96 genesis mooncats, 48 black and 48 white
-            // 160 genesis mooncats are lost forever due to the keys being burnt
-            return this.getMoonCatData.length; // 25440;
-          },
-          getMoonCatData() {
-            let results = [];
-            for (let i in MOONCATDATA) {
-              const d = MOONCATDATA[i];
-              const k = d.catId.substring(4, 6);
-              d.kBits = this.toBin8(parseInt(d.catId.substring(4, 6), 16)).split("");
-              if (d.catId.substring(2, 4) == "ff") {
-                const genesisCatIndex = d.catId.substring(4, 6);
-                d.kInverted = (parseInt(genesisCatIndex, 16) % 2) == 0 ? 'Not Inverted' : 'Inverted';
-              } else {
-                d.kInverted = d.kBits[0] == 0 ? 'Not Inverted' : 'Inverted';
-              }
-              d.kFacing = d.kBits[1] == 0 ? 'Left' : 'Right';
-              if (d.kBits[2] == 0) {
-                if (d.kBits[3] == 0) {
-                  d.kFaceDetails = "Smile";
-                } else {
-                  d.kFaceDetails = "Frown (look down)";
-                }
-              } else {
-                if (d.kBits[3] == 0) {
-                  d.kFaceDetails = "Frown (look up)";
-                } else {
-                  d.kFaceDetails = "Flat whiskers";
-                }
-              }
-              if (d.kBits[4] == 0) {
-                if (d.kBits[5] == 0) {
-                  d.kFurPattern = "Solid";
-                } else {
-                  d.kFurPattern = "Striped";
-                }
-              } else {
-                if (d.kBits[5] == 0) {
-                  d.kFurPattern = "Eyepatch";
-                } else {
-                  d.kFurPattern = "Half/half";
-                }
-              }
-              if (d.kBits[6] == 0) {
-                if (d.kBits[7] == 0) {
-                  d.kPose = "Standing";
-                } else {
-                  d.kPose = "Sleeping";
-                }
-              } else {
-                if (d.kBits[7] == 0) {
-                  d.kPose = "Pouncing";
-                } else {
-                  d.kPose = "Stalking";
-                }
-              }
-              d.hsl = getMoonCatHSL(d.catId);
-              if (d.hsl) {
-                const h = parseInt(d.hsl[0] + 0.000001);
-                if (h > 345 || h <= 15) {
-                  d.colour = "red";
-                } else if (h <= 45) {
-                  d.colour = "orange";
-                } else if (h <= 75) {
-                  d.colour = "yellow";
-                } else if (h <= 105) {
-                  d.colour = "chartreuse";
-                } else if (h <= 135) {
-                  d.colour = "green";
-                } else if (h <= 165) {
-                  d.colour = "teal";
-                } else if (h <= 195) {
-                  d.colour = "cyan";
-                } else if (h <= 225) {
-                  d.colour = "skyBlue";
-                } else if (h <= 255) {
-                  d.colour = "blue";
-                } else if (h <= 285) {
-                  d.colour = "purple";
-                } else if (h <= 315) {
-                  d.colour = "magenta";
-                } else {
-                  d.colour = "fuchsia";
-                }
-              } else {
-                const genesisCatIndex = parseInt(d.catId.substring(4, 6), 16);
-                d.colour =  genesisCatIndex % 2 == 0 ? "black" : "white";
-              }
-              // if (i == 721) {
-              //   console.log(JSON.stringify(d, null, 2));
-              // }
-              if (d.details.hue.localeCompare(d.colour)) {
-                console.log("hue check: " + d.rescueIndex + ": " + d.catId + " apiColour: " + d.details.hue + "(" + d.details.hueValue + ") <>" + d.hsl + " " + d.colour);
-              }
-              results.push(d);
-            }
-            return results;
-          },
-          getMoonCatCatIdToRescueIndex() {
-            let results = {};
-            for (let i in this.getMoonCatData) {
-              const d = this.getMoonCatData[i];
-              results[d.catId] = d.rescueIndex;
-            }
-            return results;
-          },
-          getMoonCatDataSearchResults() {
-            let results1;
-            if (this.searchString != null && this.searchString.length > 0) {
-              results1 = [];
-              for (let i in this.getMoonCatData) {
-                const d = this.getMoonCatData[i];
-                if (d.rescueIndex == this.searchString || d.catId.includes(this.searchString) || d.rescued.block == this.searchString || d.rescued.tx.includes(this.searchString) || d.rescued.by.includes(this.searchString) || d.colour.includes(this.searchString)) {
-                  results1.push(d);
-                }
-              }
-            } else {
-              results1 = this.getMoonCatData;
-            }
-            let results2;
-            if (this.searchYear != null) {
-              results2 = [];
-              for (let i in results1) {
-                const d = results1[i];
-                if (new Date(d.rescued.timestamp * 1000).getFullYear() == this.searchYear) {
-                  results2.push(d);
-                }
-              }
-            } else {
-              results2 = results1;
-            }
-            return results2;
-          },
-          getMoonCatDataSearchResultsPage() {
-            const currentPage = this.searchCurrentPage;
-            const perPage = this.searchPerPage;
-            return this.getMoonCatDataSearchResults.slice((currentPage - 1) * perPage, currentPage * perPage);
-          },
-          getMoonCatDataSearchResultsRows() {
-            return this.getMoonCatDataSearchResults.length;
-          },
-          showAlert() {
-            // console.log(ethers.utils.hashMessage("Hello World"));
-            // return this.catId.length > 4 ? true : false
-            return true;
-          }
         },
         methods: {
           async connect() {
