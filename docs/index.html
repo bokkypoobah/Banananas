@@ -134,7 +134,7 @@
                 <b-card-text>
                   <div class="d-flex m-0 p-0" style="height: 37px;">
                     <div>
-                      <b-form-input type="text" size="sm" v-model.trim="searchString" debounce="600" placeholder="Search..." v-b-popover.hover="'Search by rescueIndex, catId, blockNumber, tx or rescuer address'"></b-form-input>
+                      <b-form-input type="text" size="sm" v-model.trim="searchString" debounce="600" placeholder="Search..." v-b-popover.hover="'Search by tokenId'"></b-form-input>
                     </div>
                     <div class="pl-1">
                       <b-form-select size="sm" v-model="searchYear" :options="searchYearOptions"></b-form-select>
@@ -144,9 +144,11 @@
                     </div>
                     <div class="pr-1 flex-grow-1">
                     </div>
+                    <!--
                     <div class="pl-1">
                       <b-form-checkbox size="sm" v-model="displayAcclimated" v-b-popover.hover="'Use Acclimated MoonCat images instead of generating the images from the catId'" class="pt-1">Acclimated</b-form-select>
                     </div>
+                    -->
                     <div class="pl-1">
                       <b-form-select size="sm" v-model="view" :options="viewOptions"></b-form-select>
                     </div>
@@ -401,7 +403,21 @@
             return BANANADATA.length;
           },
           getBananaSearchResults() {
-            return this.getBananaData;
+            let results = [];
+            if (this.searchString != null && this.searchString.length > 0) {
+              for (let i in this.getBananaData) {
+                const d = this.getBananaData[i];
+                // if (d.rescueIndex == this.searchString || d.catId.includes(this.searchString) || d.rescued.block == this.searchString || d.rescued.tx.includes(this.searchString) || d.rescued.by.includes(this.searchString) || d.colour.includes(this.searchString)) {
+                //   results1.push(d);
+                // }
+                if (d.tokenId == this.searchString || d.name.includes(this.searchString)) {
+                  results.push(d);
+                }
+              }
+            } else {
+              results = this.getBananaData;
+            }
+            return results;
           },
           getBananaSearchResultsPage() {
             const currentPage = this.searchCurrentPage;
