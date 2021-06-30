@@ -156,7 +156,7 @@
           searchString: '',
           searchCurrentPage: 1,
           searchTotalRows: 25440,
-          searchPerPage: 888,
+          searchPerPage: 444,
           searchPerPageOptions: [
             { value: 4, text: '4/p' },
             { value: 8, text: '8/p' },
@@ -258,6 +258,44 @@
             return BANANADATA.length;
           },
           getBananaSearchResults() {
+            let results = [];
+            for (let i in this.getBananaData) {
+              const d = this.getBananaData[i];
+              let include = true;
+              if (this.displayOwned) {
+                include = d.owned;
+              }
+
+              if (this.searchString != null && this.searchString.length > 0) {
+                const s = this.searchString.toLowerCase();
+                if (d.tokenId == this.searchString ||
+                  (d.name && d.name.toLowerCase().includes(s)) ||
+                  (d.signatureSeries && d.signatureSeries.toLowerCase().includes(s)) ||
+                  (d.background && d.background.toLowerCase().includes(s)) ||
+                  (d.bananaBase && d.bananaBase.toLowerCase().includes(s)) ||
+                  (d.mouth && d.mouth.toLowerCase().includes(s)) ||
+                  (d.eyes && d.eyes.toLowerCase().includes(s)) ||
+                  (d.headGear && d.headGear.toLowerCase().includes(s))) {
+                } else {
+                  include = false;
+                }
+              }
+
+              if (this.facing != null) {
+                if ((this.facing == 'left' && d.facing == 'Left') ||
+                  (this.facing == 'right' && d.facing == 'Right')) {
+                } else {
+                  include = false;
+                }
+              }
+
+              if (include) {
+                results.push(d);
+              }
+            }
+            return results;
+          },
+          getBananaSearchResultsOld() {
             let results1 = [];
             if (this.displayOwned) {
               for (let i in this.getBananaData) {
