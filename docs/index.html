@@ -103,7 +103,7 @@
                             </span>
                           </template>
                           <b-link :href="record.permalink + '?ref=0x000001f568875F378Bf6d170B790967FE429C81A'" v-b-popover.hover="'View on OpenSea.io'" target="_blank">
-                            <b-img-lazy width="100%" :src="record.osimage" />
+                            <b-img-lazy width="200%" :src="record.osimage" />
                           </b-link>
                         </b-card>
                       </div>
@@ -183,14 +183,14 @@
             { key: 'tokenId', label: 'tokenId' },
             { key: 'name', label: 'name' },
             { key: 'image', label: 'image' },
-            { key: 'facing', label: 'facing', sortable: true },
-            { key: 'madBoogieLogo', label: 'madBoogieLogo', sortable: true },
-            { key: 'signatureSeries', label: 'signatureSeries', sortable: true },
-            { key: 'background', label: 'background', sortable: true },
-            { key: 'bananaBase', label: 'bananaBase', sortable: true },
-            { key: 'mouth', label: 'mouth', sortable: true },
-            { key: 'eyes', label: 'eyes', sortable: true },
-            { key: 'headGear', label: 'headGear', sortable: true },
+            { key: 'facing', label: 'facing', sortable: false },
+            { key: 'madBoogieLogo', label: 'madBoogieLogo', sortable: false },
+            { key: 'signatureSeries', label: 'signatureSeries', sortable: false },
+            { key: 'background', label: 'background', sortable: false },
+            { key: 'bananaBase', label: 'bananaBase', sortable: false },
+            { key: 'mouth', label: 'mouth', sortable: false },
+            { key: 'eyes', label: 'eyes', sortable: false },
+            { key: 'headGear', label: 'headGear', sortable: false },
           ],
           ownedTokenFields: [
             { key: 'i', label: '#' },
