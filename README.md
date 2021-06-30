@@ -43,6 +43,11 @@ Sample data for tokenId 666:
 }
 ```
 
+Data for all tokens have been combined using [scripts/02_generateData.js](scripts/02_generateData.js) to generate [scripts/bananaData.js](scripts/bananaData.js) and the compact version [scripts/bananaData.min.js](scripts/bananaData.min.js):
+
+```javascript
+
+```
 
 You may find this data useful for your projects.
 
