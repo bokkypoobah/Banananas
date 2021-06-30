@@ -66,11 +66,10 @@
         <div>
           <b-card no-body class="mt-1">
             <b-tabs card v-model="tabIndex">
+              <!--
               <b-tab title="MoonCat Details">
                 <b-card-text>
                   <img :src="generateMoonCatImage(catId, 4)" />
-
-                  <!-- <b-button variant="success" @click="showModal">Find Cat</b-button> -->
 
                   <b-form-group
                     horizontal
@@ -81,7 +80,6 @@
                     <b-form-input v-model.trim="catId"></b-form-input>
                   </b-form-group>
 
-                  <!-- <b-alert variant="success" :show="showAlert">Hello {{ catId }}</b-alert> -->
                   getCatIdGenesis: {{ getCatIdGenesis }} <br />
                   getCatIdK: {{ getCatIdK }} <br />
                   getCatIdR: {{ getCatIdR }} <br />
@@ -130,6 +128,7 @@
                    {{ getCatIdData }} <br />
                 </b-card-text>
               </b-tab>
+              -->
 
               <b-tab active title="Search MoonCats">
                 <b-card-text>
@@ -229,14 +228,11 @@
                 </b-card-text>
               </b-tab>
 
+              <!--
               <b-tab title="All 256 Designs">
                 <b-card-text>
                   <p>128 designs + the same 128 designs with colours inverted</p>
-
                   <img :src="generateMoonCatImage(catId, 4)" />
-
-                  <!-- <b-button variant="success" @click="showModal">Find Cat</b-button> -->
-
                   <b-form-group
                     horizontal
                     :label-cols="4"
@@ -245,9 +241,7 @@
                   >
                     <b-form-input v-model.trim="catId"></b-form-input>
                   </b-form-group>
-
                   <b-form-checkbox size="sm" v-model="displayAcclimated" v-b-popover.hover="'Use Acclimated MoonCat images instead of generating the images from the catId'" class="pt-1">Acclimated</b-form-select>
-
                   <div v-for="(n, index) in 128" :key="index">
                     <b-card-group deck>
                       <b-card style="width: 10rem; height: 14rem;" class="mt-1">
@@ -280,6 +274,7 @@
                   </div>
                 </b-card-text>
               </b-tab>
+              -->
 
               <b-tab title="My Wallet">
                 <b-card-text>
@@ -291,12 +286,16 @@
               <b-tab title="References">
                 <b-card-text>
                   References:
+
+                    * Blah
+                    <!--
                     <b-link href="https://mooncatrescue.com/adopt.html" target="_blank">https://mooncatrescue.com/adopt.html</b-link>
                     <br />
                     <br />
                     <b-link href="https://github.com/ponderware/mooncatparser/blob/master/mooncatparser.js" target="_blank">https://github.com/ponderware/mooncatparser/blob/master/mooncatparser.js</b-link>
                     <br />
                     <b-link href="https://github.com/bokkypoobah/MoonCatExplainer" target="_blank">https://github.com/bokkypoobah/MoonCatExplainer</b-link>
+                    -->
                 </b-card-text>
               </b-tab>
             </b-tabs>
@@ -357,7 +356,7 @@
             return BANANADATA;
           },
           getBananaSearchResults() {
-            return this.getBananaData.slice(0, 1000);
+            return this.getBananaData;
           },
           getBananaSearchResultsPage() {
             const currentPage = this.searchCurrentPage;
