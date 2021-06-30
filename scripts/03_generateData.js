@@ -19,8 +19,26 @@ for (let i = 0; i < 8888; i += 50) {
     console.log("Error in file: " + filename);
   }
 }
-// console.log(osrecords);
 
+// 568 missing image - had to refresh metadata on OS
+// console.log(osrecords[567]);
+// console.log(osrecords[568]);
+// console.log(osrecords[569]);
+
+// TODO after page 1 (888)
+const LEFTIES = [
+  113, 160, 171, 193, 377, 430, 439, 552, 810,
+  926, 1055, 1089, 1209, 1242, 1442, 1475, 1609,
+  1918, 2021, 2087, 2418,
+  2828, 2919, 2944, 2949, 3158, 3371, 3435, 3469, 3490, 3493,
+  4149, 4799, 4802, 4807, 4847, 4864, 4914, 5257,
+  5494, 5575, 5594, 5728, 
+];
+let leftFacing = {};
+for (let i = 0; i < LEFTIES.length; i++) {
+  leftFacing[LEFTIES[i]] = LEFTIES[i];
+}
+// console.log("leftFacing: " + JSON.stringify(leftFacing));
 
 const INPUTDATADIR = "raw/";
 let records = [];
@@ -41,8 +59,9 @@ for (let i = 0; i < 8888; i++) {
       image: data.image,
       osimage: osData == null ? null : osData.image_url,
       permalink: osData == null ? null : osData.permalink,
-      description: data.description,
+      // description: data.description,
       attributes: data.attributes,
+      facing: leftFacing[data.tokenId] ? "Left" : "Right",
     });
   } catch (e) {
     console.log("Error in file: " + filename);
