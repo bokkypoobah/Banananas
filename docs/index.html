@@ -65,7 +65,7 @@
           <b-card no-body class="mt-1">
             <b-tabs card v-model="tabIndex">
 
-              <b-tab title="Search Bananssaas">
+              <b-tab title="Banananas">
                 <b-card-text>
                   <div class="d-flex m-0 p-0" style="height: 37px;">
                     <div>
@@ -121,13 +121,15 @@
                 </b-card-text>
               </b-tab>
 
-              <b-tab active title="My Wallet">
+              <b-tab title="Wallet">
                 <b-card-text>
-                  <!-- <b-button :disabled="!connected" variant="outline-success" @click="retrieveData">Retrieve Data</b-button> -->
-                  tokenIds: {{ Object.keys(bananasOwned) }}
+                  Select <b>Owned</b> in the previous tab to view your tokens.<br />
+                  <b-table small :fields="ownedTokenFields" :items="getOwnedTokenIdData" responsive="sm">
+                  </b-table>
                 </b-card-text>
               </b-tab>
 
+              <!--
               <b-tab title="References">
                 <b-card-text>
                   References:
@@ -135,6 +137,7 @@
                     * Blah
                 </b-card-text>
               </b-tab>
+              -->
             </b-tabs>
           </b-card>
         </div>
@@ -188,6 +191,10 @@
             { key: 'mouth', label: 'mouth', sortable: true },
             { key: 'eyes', label: 'eyes', sortable: true },
             { key: 'headGear', label: 'headGear', sortable: true },
+          ],
+          ownedTokenFields: [
+            { key: 'i', label: '#' },
+            { key: 'tokenId', label: 'tokenId' },
           ],
         },
         computed: {
@@ -307,6 +314,14 @@
           getBananaSearchResultsRows() {
             return this.getBananaSearchResults.length;
           },
+          getOwnedTokenIdData() {
+            var results = [];
+            let i = 0;
+            for (let tokenId in this.bananasOwned) {
+              results.push({ i: ++i, tokenId: tokenId })
+            }
+            return results;
+          }
         },
         methods: {
           async connect() {
@@ -327,15 +342,12 @@
               const provider = new ethers.providers.Web3Provider(window.ethereum);
               const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
               const tokensOfOwner = await banana.tokensOfOwner(this.account);
-              console.log(tokensOfOwner);
               const bananasOwned = {};
               for (let i in tokensOfOwner) {
                 let t = tokensOfOwner[i];
-                console.log(t);
                 bananasOwned[t.toString()] = this.account;
               }
               this.bananasOwned = bananasOwned;
-              console.log(JSON.stringify(this.bananasOwned, null, 2));
               localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
             }
           },
@@ -435,10 +447,10 @@
         },
         mounted() {
           if (localStorage.getItem('bananasOwned')) {
-            console.log("mounted: setting bananasOwned");
+            // console.log("mounted: setting bananasOwned");
             this.bananasOwned = JSON.parse(localStorage.getItem('bananasOwned'));
           }
-          console.log("mounted: bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
+          // console.log("mounted: bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
           // hljs.highlightAll();
         }
       })
