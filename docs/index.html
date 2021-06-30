@@ -98,7 +98,8 @@
                     <b-card-group deck>
                       <div v-for="record in getBananaSearchResultsPage">
                         <!-- <b-card body-class="p-1 d-flex align-items-end justify-content-center" img-bottom img-center header-class="p-1" footer-class="p-2" style="width: 10rem; height: 12.2rem;" img-top class="m-1 p-0 text-center text-bottom position-relative"> -->
-                        <b-card style="width: 10rem; height: 14rem;" class="mt-1">
+                        <!-- <b-card body-class="p-1 d-flex align-items-end justify-content-center" style="width: 10rem; height: 14rem;" class="mt-1"> -->
+                        <b-card body-class="p-1" header-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                           <template #header>
                             <span variant="secondary" class="small truncate">
                               {{ record.tokenId + ': ' + record.name }}
