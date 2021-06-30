@@ -1,14 +1,28 @@
 var fs = require('fs');
 const util = require('util');
-// require('./MoonCatRescueResults.js');
 
-// console.log("moonCatTotalSupply: " + moonCatTotalSupply);
-// console.log("moonCatRescueIndex: " + moonCatRescueIndex);
-// console.log("moonCatDetailsByRescueOrders: " + moonCatDetailsByRescueOrders.length);
-// console.log("moonCatGenesisCatsAddedEvents: " + moonCatGenesisCatsAddedEvents.length);
+
+const OSINPUTDATADIR = "osraw/";
+let osrecords = {};
+for (let i = 0; i < 8888; i += 50) {
+  var filename = OSINPUTDATADIR + i + ".json";
+  try {
+    var data = JSON.parse(fs.readFileSync(filename, "utf8"));
+    if (data.assets == null || data.assets.length == 0) {
+      console.log("Assets missing for: " + i);
+    }
+    for (let j = 0; j < data.assets.length; j++) {
+      const asset = data.assets[j];
+      osrecords[asset.token_id] = asset;
+    }
+  } catch (e) {
+    console.log("Error in file: " + filename);
+  }
+}
+// console.log(osrecords);
+
 
 const INPUTDATADIR = "raw/";
-
 let records = [];
 for (let i = 0; i < 8888; i++) {
   var filename = INPUTDATADIR + i + ".json";
@@ -17,10 +31,15 @@ for (let i = 0; i < 8888; i++) {
     if (data.description == null || data.description.length == 0) {
       console.log("Description missing for: " + i);
     }
+    const osData = osrecords[data.tokenId];
+    if (!osData) {
+      console.log("Cannot find OS data for: " + data.tokenId);
+    }
     records.push({
       tokenId: data.tokenId,
       name: data.name,
       image: data.image,
+      osimage: osData == null ? null : osData.image_url,
       description: data.description,
       attributes: data.attributes,
     });

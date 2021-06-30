@@ -159,9 +159,6 @@
                     </div>
                   </div>
 
-                  {{ getBananaData[0] }}
-                  {{ getBananaSearchResultsRows }}
-
                   <div v-if="view == 'cards'">
                     <b-card-group deck>
                       <div v-for="record in getBananaSearchResultsPage">
@@ -172,7 +169,7 @@
                               {{ record.tokenId + ': ' + record.name }}
                             </span>
                           </template>
-                          <b-img-lazy width="100%" :src="record.image" />
+                          <b-img-lazy width="100%" :src="record.osimage" />
 
                           <!--
                           <template #footer>
@@ -186,7 +183,7 @@
                   <div v-if="view == 'list'">
                     <b-table small :fields="fields" :items="getBananaSearchResultsPage" responsive="sm">
                       <template #cell(image)="data">
-                        <b-img-lazy width="100%" :src="data.item.image" />
+                        <b-img-lazy width="100%" :src="data.item.osimage" />
                       </template>
                       <!--
                       <template #cell(catId)="data">
@@ -360,7 +357,7 @@
             return BANANADATA;
           },
           getBananaSearchResults() {
-            return this.getBananaData.slice(0, 10);
+            return this.getBananaData.slice(0, 1000);
           },
           getBananaSearchResultsPage() {
             const currentPage = this.searchCurrentPage;
