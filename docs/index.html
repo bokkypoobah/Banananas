@@ -152,7 +152,7 @@
                       <b-form-select size="sm" v-model="view" :options="viewOptions"></b-form-select>
                     </div>
                     <div class="pl-1">
-                      <b-pagination size="sm" v-model="searchCurrentPage" :total-rows="getMoonCatDataSearchResultsRows" :per-page="searchPerPage"></b-pagination>
+                      <b-pagination size="sm" v-model="searchCurrentPage" :total-rows="getBananaSearchResultsRows" :per-page="searchPerPage"></b-pagination>
                     </div>
                     <div class="pl-1">
                       <b-form-select size="sm" v-model="searchPerPage" :options="searchPerPageOptions"></b-form-select>
@@ -160,27 +160,19 @@
                   </div>
 
                   {{ getBananaData[0] }}
+                  {{ getBananaSearchResultsRows }}
 
                   <div v-if="view == 'cards'">
                     <b-card-group deck>
-                      <div v-for="record in getMoonCatDataSearchResultsPage">
+                      <div v-for="record in getBananaSearchResultsPage">
                         <!-- <b-card body-class="p-1 d-flex align-items-end justify-content-center" img-bottom img-center header-class="p-1" footer-class="p-2" style="width: 10rem; height: 12.2rem;" img-top class="m-1 p-0 text-center text-bottom position-relative"> -->
                         <b-card style="width: 10rem; height: 14rem;" class="mt-1">
                           <template #header>
                             <span variant="secondary" class="small truncate">
-                              {{ record.rescueIndex + ': ' + record.catId }}
+                              {{ record.tokenId + ': ' + record.name }}
                             </span>
                           </template>
-                          <div v-if="displayAcclimated">
-                            <b-link @click="loadCat(record.catId)" v-b-popover.hover="'View details'" class="card-link">
-                              <b-img-lazy width="140%" :src="'https://api.mooncat.community/glow-image/' + record.catId" />
-                            </b-link>
-                          </div>
-                          <div v-else>
-                            <b-link @click="loadCat(record.catId)" v-b-popover.hover="'View details'" class="card-link">
-                              <b-img-lazy width="100%" :src="generateMoonCatImage(record.catId, 4)" />
-                            </b-link>
-                          </div>
+                          <b-img-lazy width="100%" :src="record.image" />
 
                           <!--
                           <template #footer>
@@ -192,7 +184,11 @@
                     </b-card-group>
                   </div>
                   <div v-if="view == 'list'">
-                    <b-table small :fields="fields" :items="getMoonCatDataSearchResultsPage" responsive="sm">
+                    <b-table small :fields="fields" :items="getBananaSearchResultsPage" responsive="sm">
+                      <template #cell(image)="data">
+                        <b-img-lazy width="100%" :src="data.item.image" />
+                      </template>
+                      <!--
                       <template #cell(catId)="data">
                         <b-link @click="loadCat(data.item.catId)" v-b-popover.hover="'View details'" class="card-link">{{ data.item.catId }}</b-link><br />
                         <b-link :href="'https://mooncat.pro/' + data.item.catId + '/'" v-b-popover.hover="'View on MoonCat.pro'" target="_blank">mcp</b-link>
@@ -229,8 +225,8 @@
                          s: {{ data.item.hsl == null ? 'n/a' : data.item.hsl[1].toFixed(3) }}<br />
                          l: {{ data.item.hsl == null ? 'n/a' : data.item.hsl[2].toFixed(3) }}<br />
                          {{ data.item.colour }}
-                         <!-- {{ data.item.details.hueValue }}: {{ data.item.details.hue }} -->
                       </template>
+                      -->
                     </b-table>
                   </div>
                 </b-card-text>
@@ -350,12 +346,10 @@
           ],
           displayAcclimated: false,
           fields: [
-            { key: 'rescueIndex', label: 'rescueIndex' },
-            { key: 'catId', label: 'catId' },
-            'cat',
-            { key: 'rescued', label: 'Rescued' },
-            { key: 'k', label: 'k' },
-            { key: 'hsl', label: 'hsl' },
+            { key: 'tokenId', label: 'tokenId' },
+            { key: 'name', label: 'name' },
+            { key: 'image', label: 'image' },
+            { key: 'attributes', label: 'attributes' },
             // { key: 'tx', label: 'tx' },
             // { key: 'by', label: 'by' },
             // { key: 'timestamp', label: 'date' },
@@ -365,6 +359,18 @@
           getBananaData() {
             return BANANADATA;
           },
+          getBananaSearchResults() {
+            return this.getBananaData.slice(0, 10);
+          },
+          getBananaSearchResultsPage() {
+            const currentPage = this.searchCurrentPage;
+            const perPage = this.searchPerPage;
+            return this.getBananaSearchResults.slice((currentPage - 1) * perPage, currentPage * perPage);
+          },
+          getBananaSearchResultsRows() {
+            return this.getBananaSearchResults.length;
+          },
+
           getCatIdGenesis() {
             if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 4) {
               return this.catId.substring(2, 4);
