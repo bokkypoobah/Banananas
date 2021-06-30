@@ -64,7 +64,7 @@
           <b-card no-body class="mt-1">
             <b-tabs card v-model="tabIndex">
 
-              <b-tab active title="Search Bananssaas">
+              <b-tab title="Search Bananssaas">
                 <b-card-text>
                   <div class="d-flex m-0 p-0" style="height: 37px;">
                     <div>
@@ -78,11 +78,6 @@
                     </div>
                     <div class="pr-1 flex-grow-1">
                     </div>
-                    <!--
-                    <div class="pl-1">
-                      <b-form-checkbox size="sm" v-model="displayAcclimated" v-b-popover.hover="'Use Acclimated MoonCat images instead of generating the images from the catId'" class="pt-1">Acclimated</b-form-select>
-                    </div>
-                    -->
                     <div class="pl-1">
                       <b-form-select size="sm" v-model="view" :options="viewOptions"></b-form-select>
                     </div>
@@ -130,7 +125,7 @@
                 </b-card-text>
               </b-tab>
 
-              <b-tab title="My Wallet">
+              <b-tab active title="My Wallet">
                 <b-card-text>
                   <b-button :disabled="!connected" variant="outline-success" @click="retrieveData">Retrieve Data</b-button>
                   {{ owned }}
@@ -193,12 +188,12 @@
             { value: 'cards', text: 'Cards' },
             { value: 'list', text: 'List' },
           ],
-          displayAcclimated: false,
           fields: [
             { key: 'tokenId', label: 'tokenId' },
             { key: 'name', label: 'name' },
             { key: 'image', label: 'image' },
             { key: 'facing', label: 'facing', sortable: true },
+            { key: 'madBoogieLogo', label: 'madBoogieLogo', sortable: true },
             { key: 'signatureSeries', label: 'signatureSeries', sortable: true },
             { key: 'background', label: 'background', sortable: true },
             { key: 'bananaBase', label: 'bananaBase', sortable: true },
@@ -260,7 +255,7 @@
               d.headGear = headGear;
               d.signatureSeries = signatureSeries;
 
-              if (i == 4469) {
+              if (i == 1842) {
                 console.log(JSON.stringify(d, null, 2));
               }
 
@@ -394,56 +389,6 @@
               owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Wrapped' };
             }
             this.owned = owned;
-          },
-          generateMoonCatImage(catId, size) {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 12) {
-              size = size || 10;
-              var data = moonCatParser(catId);
-              var canvas = document.createElement("canvas");
-              canvas.width = size * data.length;
-              canvas.height = size * data[1].length;
-              var ctx = canvas.getContext("2d");
-
-              for(var i = 0; i < data.length; i++){
-                for(var j = 0; j < data[i].length; j++){
-                  var color = data[i][j];
-                  if(color){
-                    ctx.fillStyle = color;
-                    ctx.fillRect(i * size, j * size, size, size);
-                  }
-                }
-              }
-              return canvas.toDataURL();
-            }
-            return null;
-          },
-          loadCat(catId) {
-            this.catId = catId;
-            this.tabIndex = 0;
-          },
-          toHex2(num) {
-            let str = num.toString(16);
-            while (str.length < 2) {
-              str = "0" + str;
-            }
-            return str;
-          },
-          toBin8(num) {
-            let str = num.toString(2);
-            while (str.length < 8) {
-              str = "0" + str;
-            }
-            return str;
-          },
-          catIdWithK(k) {
-            if (this.catId.substring(0, 2) == "0x" && this.catId.length >= 12) {
-              let str = k.toString(16);
-              if (str.length < 2) {
-                str = "0" + str;
-              }
-              return this.catId.substring(0, 4) + str + this.catId.substring(6);
-            }
-            return null;
           },
           showModal() {
             var searchSeed = "8363e7eaae8e35b1c2db100a7b0fb9db1bc604a35ce1374d882690d0b1d888e2";

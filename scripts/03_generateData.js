@@ -37,11 +37,19 @@ const LEFTIES = [
   8057, 8065, 8126, 8160, 8173, 8333, 8428, 8510, 8607, 8704, 8722, 8835, 8880
 ];
 
-let leftFacing = {};
+const MADBOOGIELOGO = [
+  1842, 2428, 3430, 3439, 3553, 4175, 4764, 7710, 8120
+];
+
+let lefties = {};
 for (let i = 0; i < LEFTIES.length; i++) {
-  leftFacing[LEFTIES[i]] = LEFTIES[i];
+  lefties[LEFTIES[i]] = LEFTIES[i];
 }
-// console.log("leftFacing: " + JSON.stringify(leftFacing));
+let madBoogieLogo = {};
+for (let i = 0; i < MADBOOGIELOGO.length; i++) {
+  madBoogieLogo[MADBOOGIELOGO[i]] = MADBOOGIELOGO[i];
+}
+// console.log("lefties: " + JSON.stringify(lefties));
 
 const INPUTDATADIR = "raw/";
 let records = [];
@@ -64,7 +72,8 @@ for (let i = 0; i < 8888; i++) {
       permalink: osData == null ? null : osData.permalink,
       // description: data.description,
       attributes: data.attributes,
-      facing: leftFacing[data.tokenId] ? "Left" : "Right",
+      facing: lefties[data.tokenId] ? "Left" : "Right",
+      madBoogieLogo: madBoogieLogo[data.tokenId] ? "True" : null,
     });
   } catch (e) {
     console.log("Error in file: " + filename);
