@@ -40,6 +40,7 @@ for (let i = 0; i < 8888; i++) {
       name: data.name,
       image: data.image,
       osimage: osData == null ? null : osData.image_url,
+      permalink: osData == null ? null : osData.permalink,
       description: data.description,
       attributes: data.attributes,
     });

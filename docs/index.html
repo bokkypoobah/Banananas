@@ -168,7 +168,9 @@
                               {{ record.tokenId + ': ' + record.name }}
                             </span>
                           </template>
-                          <b-img-lazy width="100%" :src="record.osimage" />
+                          <b-link :href="record.permalink + '?ref=0x000001f568875F378Bf6d170B790967FE429C81A'" v-b-popover.hover="'View on OpenSea.io'" target="_blank">
+                            <b-img-lazy width="100%" :src="record.osimage" />
+                          </b-link>
 
                           <!--
                           <template #footer>
@@ -182,7 +184,9 @@
                   <div v-if="view == 'list'">
                     <b-table small :fields="fields" :items="getBananaSearchResultsPage" responsive="sm">
                       <template #cell(image)="data">
-                        <b-img-lazy width="100%" :src="data.item.osimage" />
+                        <b-link :href="data.item.permalink + '?ref=0x000001f568875F378Bf6d170B790967FE429C81A'" v-b-popover.hover="'View on OpenSea.io'" target="_blank">
+                          <b-img-lazy width="100%" :src="data.item.osimage" />
+                        </b-link>
                       </template>
                       <!--
                       <template #cell(catId)="data">
@@ -353,7 +357,45 @@
         },
         computed: {
           getBananaData() {
-            return BANANADATA;
+            const results = [];
+            for (let i in BANANADATA) {
+              const d = BANANADATA[i];
+              let background = null;
+              let bananaBase = null;
+              let mouth = null;
+              let eyes = null;
+              let headGear = null;
+              for (let k in d.attributes) {
+                const a = d.attributes[k];
+                // console.log(k + " => " + JSON.stringify(a));
+                if (a.trait_type == 'Background') {
+                  background = a.value;
+                } else if (a.trait_type == 'Banana Base') {
+                  bananaBase = a.value;
+                } else if (a.trait_type == 'Mouth') {
+                  mouth = a.value;
+                } else if (a.trait_type == 'Eyes') {
+                  eyes = a.value;
+                } else if (a.trait_type == 'Head Gear') {
+                  headGear = a.value;
+                }
+              }
+              if (background == null || bananaBase == null || mouth == null || eyes == null || headGear == null) {
+                console.log("tokenId: " + i);
+                console.log("d: " + JSON.stringify(d));
+                console.log("background: " + background);
+                console.log("bananaBase: " + bananaBase);
+                console.log("mouth: " + mouth);
+                console.log("eyes: " + eyes);
+                console.log("headGear: " + headGear);
+              }
+              if (i == 636) {
+                console.log(JSON.stringify(d, null, 2));
+              }
+
+              results.push(d);
+            }
+            return results;
           },
           getBananaTotalSupply() {
             return BANANADATA.length;
