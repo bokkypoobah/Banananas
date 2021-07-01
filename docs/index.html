@@ -412,7 +412,8 @@
                 const bananasOwned = {};
                 for (let i in tokensOfOwner) {
                   let t = tokensOfOwner[i];
-                  bananasOwned[t.toString()] = bananaNamesOfOwner[i] || ('#' + t.toString());
+                  let name = bananaNamesOfOwner[i] || ('#' + t.toString());
+                  bananasOwned[t.toString()] = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 }
                 this.bananasOwned = bananasOwned;
                 localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
@@ -424,6 +425,7 @@
           disconnect() {
             this.connected = false;
           },
+          /*
           async retrieveData() {
             console.log("retrieveData");
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -435,7 +437,8 @@
               const bananasOwned = {};
               for (let i in tokensOfOwner) {
                 let t = tokensOfOwner[i];
-                bananasOwned[t.toString()] = bananaNamesOfOwner[i] || ('#' + t.toString());
+                let name = bananaNamesOfOwner[i] || ('#' + t.toString());
+                bananasOwned[t.toString()] = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
               }
               this.bananasOwned = bananasOwned;
               localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
@@ -443,6 +446,7 @@
               alert("Please switch to the Ethereum mainnet and refresh");
             }
           },
+          */
         },
         mounted() {
           if (localStorage.getItem('bananasOwned')) {
