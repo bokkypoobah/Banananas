@@ -79,7 +79,6 @@
             <b-avatar variant="light" size="2.0rem" src="images/Banana_7488.jpg" v-b-popover.hover.bottom="'Banana #7488'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_7489.jpg" v-b-popover.hover.bottom="'Banana #7489'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_7490.jpg" v-b-popover.hover.bottom="'Banana #7490'" class="ml-1"></b-avatar>
-            <b-avatar variant="light" size="2.0rem" src="images/Banana_7491.jpg" v-b-popover.hover.bottom="'Banana #7491'" class="ml-1"></b-avatar>
             <b-navbar-nav class="ml-auto">
               <b-button size="sm" variant="outline-primary" class="ml-4" v-b-popover.hover="'Power up this app'" @click="connect();" v-if="!connected">Connect Wallet</b-button>
               <b-button size="sm" variant="outline-primary" class="ml-4" v-b-popover.hover="'Power down this app'" @click="disconnect();" v-if="connected">Disconnect {{ account.substring(0, 10) }}</b-button>
