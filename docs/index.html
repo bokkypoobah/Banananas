@@ -151,6 +151,7 @@
           connected: false,
           account: null,
           bananasOwned: [],
+          bananaNamesOfOwner: [],
           tabIndex: 0,
           abortSearch: false,
           searchString: '',
@@ -181,8 +182,8 @@
           ],
           fields: [
             { key: 'tokenId', label: 'tokenId' },
-            { key: 'name', label: 'name' },
             { key: 'image', label: 'image' },
+            { key: 'name', label: 'name' },
             { key: 'facing', label: 'facing', sortable: false },
             { key: 'madBoogieLogo', label: 'madBoogieLogo', sortable: false },
             { key: 'signatureSeries', label: 'signatureSeries', sortable: false },
@@ -195,6 +196,7 @@
           ownedTokenFields: [
             { key: 'i', label: '#' },
             { key: 'tokenId', label: 'tokenId' },
+            { key: 'name', label: 'name' },
           ],
         },
         computed: {
@@ -244,11 +246,14 @@
               d.signatureSeries = signatureSeries;
 
               d.owned = this.bananasOwned[i] && this.bananasOwned[i].length > 0;
-              if (/*i == 991842 || */ d.owned) {
-                console.log("this.bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
-                console.log("this.bananasOwned[i]: " + JSON.stringify(this.bananasOwned[i], null, 2));
-                console.log(JSON.stringify(d).toString(200));
+              if (this.bananaNamesOfOwner[i]) {
+                d.name = this.bananaNamesOfOwner[i];
               }
+              // if (/*i == 991842 || */ d.owned) {
+              //   console.log("this.bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
+              //   console.log("this.bananasOwned[i]: " + JSON.stringify(this.bananasOwned[i], null, 2));
+              //   console.log(JSON.stringify(d).toString(200));
+              // }
 
               results.push(d);
             }
@@ -295,55 +300,6 @@
             }
             return results;
           },
-          getBananaSearchResultsOld() {
-            let results1 = [];
-            if (this.displayOwned) {
-              for (let i in this.getBananaData) {
-                const d = this.getBananaData[i];
-                if (d.owned) {
-                  results1.push(d);
-                }
-              }
-            } else {
-              results1 = this.getBananaData;
-            }
-
-            let results2 = [];
-            if (this.searchString != null && this.searchString.length > 0) {
-              const s = this.searchString.toLowerCase();
-              for (let i in result1) {
-                const d = result1[i];
-                if (d.tokenId == this.searchString ||
-                  (d.name && d.name.toLowerCase().includes(s)) ||
-                  (d.signatureSeries && d.signatureSeries.toLowerCase().includes(s)) ||
-                  (d.background && d.background.toLowerCase().includes(s)) ||
-                  (d.bananaBase && d.bananaBase.toLowerCase().includes(s)) ||
-                  (d.mouth && d.mouth.toLowerCase().includes(s)) ||
-                  (d.eyes && d.eyes.toLowerCase().includes(s)) ||
-                  (d.headGear && d.headGear.toLowerCase().includes(s))) {
-                  results2.push(d);
-                }
-              }
-            } else {
-              results2 = results1;
-            }
-            let results3;
-            if (this.facing != null) {
-              results3 = [];
-              for (let i in results2) {
-                const d = results2[i];
-                if ((this.facing == 'left' && d.facing == 'Left') ||
-                  (this.facing == 'right' && d.facing == 'Right')) {
-                  results3.push(d);
-                }
-              }
-
-            } else {
-              results3 = results2;
-            }
-
-            return results3;
-          },
           getBananaSearchResultsPage() {
             const currentPage = this.searchCurrentPage;
             const perPage = this.searchPerPage;
@@ -354,9 +310,23 @@
           },
           getOwnedTokenIdData() {
             var results = [];
-            let i = 0;
+            let i;
+
+            for (let i in this.bananasOwned.length) {
+              console.log(i + " => " + this.bananasOwned[i] + " " + this.bananaNamesOfOwner[i]);
+            }
+            // this.bananasOwned = bananasOwned;
+            // localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
+            // this.bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
+            // localStorage.setItem('bananaNamesOfOwner', JSON.stringify(this.bananaNamesOfOwner));
+
+            i = 0;
             for (let tokenId in this.bananasOwned) {
-              results.push({ i: ++i, tokenId: tokenId })
+              let name = null;
+              if (this.bananaNamesOfOwner[tokenId]) {
+                name = this.bananaNamesOfOwner[tokenId];
+              }
+              results.push({ i: ++i, tokenId: tokenId, name: name })
             }
             return results;
           }
@@ -387,6 +357,8 @@
               }
               this.bananasOwned = bananasOwned;
               localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
+              this.bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
+              localStorage.setItem('bananaNamesOfOwner', JSON.stringify(this.bananaNamesOfOwner));
             }
           },
           disconnect() {
@@ -395,20 +367,6 @@
           async retrieveData() {
             console.log("retrieveData");
             const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-            // const moonCatRescue = new ethers.Contract(MOONCATRESCUEADDRESS, MOONCATRESCUEABI, provider);
-            // const totalSupply = await moonCatRescue.totalSupply();
-            // console.log("retrieveData: execWeb3() moonCatRescue.totalSupply: " + totalSupply.toString());
-            // const rescueIndex = await moonCatRescue.rescueIndex();
-            // console.log("retrieveData: execWeb3() moonCatRescue.rescueIndex: " + rescueIndex.toString());
-            // const catIds = await moonCatRescue.getCatIds();
-            // console.log(JSON.stringify(catIds));
-            // try {
-            //   const names = await moonCatRescue.getCatNames();
-            //   console.log(JSON.stringify(names));
-            // } catch (e) {
-            //   console.log(e.getMessage);
-            // }
             const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
             const tokensOfOwner = await banana.tokensOfOwner(this.account);
             console.log(tokensOfOwner);
@@ -422,72 +380,19 @@
             console.log(JSON.stringify(this.bananasOwned, null, 2));
             localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
 
-            // const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
-            // console.log(bananaNamesOfOwner);
-
-            // let owned = {};
-            // let attempts = 1;
-            // let success = false;
-            // do {
-            //   try {
-            //     console.log("Retrieving owners, attempt: " + attempts);
-            //     const owners = await moonCatRescue.getCatOwners();
-            //     const a = this.account.toString();
-            //     for (let i = 0; i < owners.length; i++) {
-            //       const o = owners[i].toString().toLowerCase();
-            //       if (!a.localeCompare(o)) {
-            //         owned[i] = { rescueIndex: i, owner: o, contract: 'Original' };
-            //       }
-            //     }
-            //     success = true;
-            //   } catch (e) {
-            //     console.log(e.getMessage);
-            //   }
-            // } while (!success && attempts++ <= 10);
-            //
-            // const acclimatedMoonCat = new ethers.Contract(ACCLIMATEDMOONCATADDRESS, ACCLIMATEDMOONCATABI, provider);
-            // const tokensIdsByOwner = await acclimatedMoonCat.tokensIdsByOwner(this.account);
-            // for (let i = 0; i < tokensIdsByOwner.length; i++) {
-            //   const rescueIndex = tokensIdsByOwner[i].toString();
-            //   owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Acclimated' };
-            // }
-
-            // // Testing
-            // const account = "0x1c46718463877607b620aa26d10e75bc771ba24e";
-            // const wrappedMoonCat = new ethers.Contract(WRAPPEDMOONCATADDRESS, WRAPPEDMOONCATABI, provider);
-            // const balanceOf = await wrappedMoonCat.balanceOf(account);
-            // for (let i = 0; i < balanceOf; i++) {
-            //   const tokenOfOwnerByIndex = await wrappedMoonCat.tokenOfOwnerByIndex(account, i);
-            //   const catId = await wrappedMoonCat._tokenIDToCatID(tokenOfOwnerByIndex);
-            //   const rescueIndex = this.getMoonCatCatIdToRescueIndex[catId];
-            //   owned[rescueIndex] = { rescueIndex: rescueIndex, owner: this.account, contract: 'Wrapped' };
-            // }
+            this.bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
+            localStorage.setItem('bananaNamesOfOwner', JSON.stringify(this.bananaNamesOfOwner));
+            console.log(bananaNamesOfOwner);
           },
-          showModal() {
-            var searchSeed = "8363e7eaae8e35b1c2db100a7b0fb9db1bc604a35ce1374d882690d0b1d888e2";
-            var seed;
-            var result = ethers.utils.hashMessage(new Date().toString());
-            async function hello() {
-              console.log("  In Hello");
-              // while (result.substring(0, 8) != "0x000000") {
-              while (result.substring(0, 6) != "0x0000") {
-                seed = result;
-                result = ethers.utils.hashMessage(seed + searchSeed, {encoding: 'hex'});
-              }
-              console.log("    seed=" + seed);
-              console.log("    result=" + result);
-              console.log("  Out of Hello");
-              return greeting = await Promise.resolve("Hello");
-            };
-            hello(); // .then(alert);
-            // console.log(ethers.utils.hashMessage("Hello World"));
-          }
         },
         mounted() {
           if (localStorage.getItem('bananasOwned')) {
-            // console.log("mounted: setting bananasOwned");
             this.bananasOwned = JSON.parse(localStorage.getItem('bananasOwned'));
           }
+          if (localStorage.getItem('bananaNamesOfOwner')) {
+            this.bananaNamesOfOwner = JSON.parse(localStorage.getItem('bananaNamesOfOwner'));
+          }
+          // console.log("mounted - bananaNamesOfOwner: " + JSON.stringify(this.bananaNamesOfOwner));
           // console.log("mounted: bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
           // hljs.highlightAll();
         }
