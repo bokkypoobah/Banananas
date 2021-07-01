@@ -49,7 +49,7 @@
       <b-container fluid class="m-0 p-2">
         <div>
           <b-navbar variant="light">
-            <b-navbar-brand to="./" variant="primary">
+            <b-navbar-brand to="./" variant="primary" v-b-popover.hover.bottom="'Boring Bananas Browser'">
               Banananas
             </b-navbar-brand>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_2.jpg" v-b-popover.hover.bottom="'Banana #2'" class="ml-5"></b-avatar>
@@ -59,7 +59,7 @@
             <b-avatar variant="light" size="2.0rem" src="images/Banana_2952.jpg" v-b-popover.hover.bottom="'2952: Banananananana'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_4149.jpg" v-b-popover.hover.bottom="'Banana #4149'" class="ml-1"></b-avatar>
 
-
+            <!--
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6529.jpg" v-b-popover.hover.bottom="'Banana #6529'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6534.jpg" v-b-popover.hover.bottom="'Banana #6534'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6535.jpg" v-b-popover.hover.bottom="'Banana #6535'" class="ml-1"></b-avatar>
@@ -67,6 +67,7 @@
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6538.jpg" v-b-popover.hover.bottom="'Banana #6538'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6539.jpg" v-b-popover.hover.bottom="'Banana #6539'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6542.jpg" v-b-popover.hover.bottom="'Banana #6542'" class="ml-1"></b-avatar>
+            -->
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6543.jpg" v-b-popover.hover.bottom="'Banana #6543'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6544.jpg" v-b-popover.hover.bottom="'Banana #6544'" class="ml-1"></b-avatar>
             <b-avatar variant="light" size="2.0rem" src="images/Banana_6545.jpg" v-b-popover.hover.bottom="'Banana #6545'" class="ml-1"></b-avatar>
@@ -389,7 +390,7 @@
         methods: {
           async connect() {
             if (!window.ethereum) {
-              alert("Please use the https://metamask.io addon with Firefox, Chromium, Opera or Chrome, or any other other web3 browser to view this page");
+              alert("Please use the https://metamask.io addon with Firefox, Chromium, Opera or Chrome, or any other other web3 browser, if you would like to view your Ethereum wallet's Boring Bananas.");
               this.connected = false;
               this.account = null;
             } else {
