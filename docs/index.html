@@ -246,8 +246,8 @@
               d.signatureSeries = signatureSeries;
 
               d.owned = this.bananasOwned[i] && this.bananasOwned[i].length > 0;
-              if (this.bananaNamesOfOwner[i]) {
-                d.name = this.bananaNamesOfOwner[i];
+              if (this.bananasOwned[i]) {
+                d.name = this.bananasOwned[i];
               }
               // if (/*i == 991842 || */ d.owned) {
               //   console.log("this.bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
@@ -310,23 +310,9 @@
           },
           getOwnedTokenIdData() {
             var results = [];
-            let i;
-
-            for (let i in this.bananasOwned.length) {
-              console.log(i + " => " + this.bananasOwned[i] + " " + this.bananaNamesOfOwner[i]);
-            }
-            // this.bananasOwned = bananasOwned;
-            // localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
-            // this.bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
-            // localStorage.setItem('bananaNamesOfOwner', JSON.stringify(this.bananaNamesOfOwner));
-
-            i = 0;
+            let i = 0;
             for (let tokenId in this.bananasOwned) {
-              let name = null;
-              if (this.bananaNamesOfOwner[tokenId]) {
-                name = this.bananaNamesOfOwner[tokenId];
-              }
-              results.push({ i: ++i, tokenId: tokenId, name: name })
+              results.push({ i: ++i, tokenId: tokenId, name: this.bananasOwned[tokenId] })
             }
             return results;
           }
@@ -350,15 +336,14 @@
               const provider = new ethers.providers.Web3Provider(window.ethereum);
               const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
               const tokensOfOwner = await banana.tokensOfOwner(this.account);
+              const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
               const bananasOwned = {};
               for (let i in tokensOfOwner) {
                 let t = tokensOfOwner[i];
-                bananasOwned[t.toString()] = this.account;
+                bananasOwned[t.toString()] = bananaNamesOfOwner[i] || ('#' + t.toString());
               }
               this.bananasOwned = bananasOwned;
               localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
-              this.bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
-              localStorage.setItem('bananaNamesOfOwner', JSON.stringify(this.bananaNamesOfOwner));
             }
           },
           disconnect() {
@@ -369,30 +354,20 @@
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
             const tokensOfOwner = await banana.tokensOfOwner(this.account);
-            console.log(tokensOfOwner);
+            const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
             const bananasOwned = {};
             for (let i in tokensOfOwner) {
               let t = tokensOfOwner[i];
-              console.log(t);
-              bananasOwned[t.toString()] = this.account;
+              bananasOwned[t.toString()] = bananaNamesOfOwner[i] || ('#' + t.toString());
             }
             this.bananasOwned = bananasOwned;
-            console.log(JSON.stringify(this.bananasOwned, null, 2));
             localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
-
-            this.bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
-            localStorage.setItem('bananaNamesOfOwner', JSON.stringify(this.bananaNamesOfOwner));
-            console.log(bananaNamesOfOwner);
           },
         },
         mounted() {
           if (localStorage.getItem('bananasOwned')) {
             this.bananasOwned = JSON.parse(localStorage.getItem('bananasOwned'));
           }
-          if (localStorage.getItem('bananaNamesOfOwner')) {
-            this.bananaNamesOfOwner = JSON.parse(localStorage.getItem('bananaNamesOfOwner'));
-          }
-          // console.log("mounted - bananaNamesOfOwner: " + JSON.stringify(this.bananaNamesOfOwner));
           // console.log("mounted: bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
           // hljs.highlightAll();
         }
