@@ -195,7 +195,6 @@
                     <li>Written using the <a href="https://bootstrap-vue.org/" class="card-link" target="_blank">https://bootstrap-vue.org/</a> framework</li>
                     <li>Generates "static" data by collating information from the token contract's <em>tokenURI(...)</em> information with information from OpenSea.io.</li>
                     <li>Uses <a href="https://github.com/ethers-io/ethers.js/" class="card-link" target="_blank">ethers.js</a> to connect to Ethereum via web3 to retrieve NFT tokens owned and their names</li>
-                    <li>Uses <a href="https://github.com/ethers-io/ethers.js/" class="card-link" target="_blank">ethers.js</a> to connect to Ethereum via web3 to retrieve NFT tokens owned and their names</li>
                     <li>Has no tracking technology. However connections from this app to OpenSea and MetaMask from your website will leak some information.</li>
                     <li>Can be run on your own computer by cloning the GitHub repository and serving the pages using a webserver, or the "anywhere" server.</li>
                     <li>Can be run from GitHub pages, so you can easily clone, customise and server your own version</li>
@@ -402,8 +401,33 @@
                   console.log("connect(): Error connecting");
                 }
               }
-              this.connected = true;
               const provider = new ethers.providers.Web3Provider(window.ethereum);
+              const network = await provider.getNetwork();
+              if (network.chainId == 1) {
+                this.connected = true;
+                const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
+                const tokensOfOwner = await banana.tokensOfOwner(this.account);
+                const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
+                const bananasOwned = {};
+                for (let i in tokensOfOwner) {
+                  let t = tokensOfOwner[i];
+                  bananasOwned[t.toString()] = bananaNamesOfOwner[i] || ('#' + t.toString());
+                }
+                this.bananasOwned = bananasOwned;
+                localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
+              } else {
+                alert("Please switch to the Ethereum mainnet and refresh");
+              }
+            }
+          },
+          disconnect() {
+            this.connected = false;
+          },
+          async retrieveData() {
+            console.log("retrieveData");
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const network = await provider.getNetwork();
+            if (network.chainId == 1) {
               const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
               const tokensOfOwner = await banana.tokensOfOwner(this.account);
               const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
@@ -414,24 +438,9 @@
               }
               this.bananasOwned = bananasOwned;
               localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
+            } else {
+              alert("Please switch to the Ethereum mainnet and refresh");
             }
-          },
-          disconnect() {
-            this.connected = false;
-          },
-          async retrieveData() {
-            console.log("retrieveData");
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
-            const tokensOfOwner = await banana.tokensOfOwner(this.account);
-            const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
-            const bananasOwned = {};
-            for (let i in tokensOfOwner) {
-              let t = tokensOfOwner[i];
-              bananasOwned[t.toString()] = bananaNamesOfOwner[i] || ('#' + t.toString());
-            }
-            this.bananasOwned = bananasOwned;
-            localStorage.setItem('bananasOwned', JSON.stringify(bananasOwned));
           },
         },
         mounted() {
