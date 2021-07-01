@@ -157,14 +157,20 @@
               <b-tab title="Info">
                 <h6 class="mb-1">What Is This Site?</h6>
                 <b-card-text>
-                  A small web3 app to view your BoringBananas from <a href="https://www.boringbananas.co/" class="card-link" target="_blank">https://www.boringbananas.co/</a> ("BBC"). Open sourced code is available for you to improve on - see below. We are not affiliated with BBC.
+                  A small web3 app to view your BoringBananas from <a href="https://www.boringbananas.co/" class="card-link" target="_blank">https://www.boringbananas.co/</a> ("BBC"). Open sourced code is available for you to improve on - see below.
                 </b-card-text>
 
-                <h6 class="mt-4 mb-1">Where Can I Get Some BoringBananas?</h6>
+                <b-card-text>
+                  We are not affiliated with BBC. If you have questions about BBC, head over to their Discord, linked from their site above.
+                </b-card-text>
+
+                <h6 class="mt-4 mb-1">How Do I Get Some BoringBananas?</h6>
                 <b-card-text>
                   The original minting of BBCs occurred on Jun-29-2021 and is now closed.
 
-                  BBCs can be bought from secondary ERC-721 markets such as <a href="https://opensea.io/collection/boring-bananas-company" class="card-link" target="_blank">BBC @ OpenSea</a>
+                  BBCs can be bought from secondary ERC-721 markets such as <a href="https://opensea.io/collection/boring-bananas-company" class="card-link" target="_blank">opensea.io - BBC</a>.
+
+                  See <a href="https://rarity.tools/boring-bananas-company" class="card-link" target="_blank">rarity.tools - BBC</a> for rarities.
                 </b-card-text>
 
                 <h6 class="mt-4 mb-1">Contract Details</h6>
@@ -189,6 +195,10 @@
                     <li>Written using the <a href="https://bootstrap-vue.org/" class="card-link" target="_blank">https://bootstrap-vue.org/</a> framework</li>
                     <li>Generates "static" data by collating information from the token contract's <em>tokenURI(...)</em> information with information from OpenSea.io.</li>
                     <li>Uses <a href="https://github.com/ethers-io/ethers.js/" class="card-link" target="_blank">ethers.js</a> to connect to Ethereum via web3 to retrieve NFT tokens owned and their names</li>
+                    <li>Uses <a href="https://github.com/ethers-io/ethers.js/" class="card-link" target="_blank">ethers.js</a> to connect to Ethereum via web3 to retrieve NFT tokens owned and their names</li>
+                    <li>Has no tracking technology. However connections from this app to OpenSea and MetaMask from your website will leak some information.</li>
+                    <li>Can be run on your own computer by cloning the GitHub repository and serving the pages using a webserver, or the "anywhere" server.</li>
+                    <li>Can be run from GitHub pages, so you can easily clone, customise and server your own version</li>
                   </ul>
                 </b-card-text>
 
