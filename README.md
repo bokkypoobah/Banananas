@@ -147,4 +147,4 @@ You may find this data useful for your projects.
 
 Enjoy!
 
-(c) BokkyPooBah / Bok Consulting Pty Ltd - Jun 30 2019. The MIT Licence. Not affiliated with Boring Bananas Co.
+(c) BokkyPooBah / Bok Consulting Pty Ltd - Jul 2021. The MIT Licence. Not affiliated with Boring Bananas Co.
