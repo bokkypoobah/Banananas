@@ -224,6 +224,8 @@
           account: null,
           bananasOwned: [],
           bananaNamesOfOwner: [],
+          owners: [],
+          names: [],
           tabIndex: 0,
           abortSearch: false,
           searchString: '',
@@ -408,6 +410,18 @@
               const network = await provider.getNetwork();
               if (network.chainId == 1) {
                 this.connected = true;
+
+                const bananaHelper = new ethers.Contract(BANANAHELPERADDRESS, BANANAHELPERABI, provider);
+                const names = await bananaHelper.names();
+                console.log(JSON.stringify(names));
+                const owners = await bananaHelper.owners();
+                console.log(JSON.stringify(owners));
+
+                this.owners = owners;
+                localStorage.setItem('bananaOwners', JSON.stringify(owners));
+                this.names = names;
+                localStorage.setItem('bananaNames', JSON.stringify(names));
+
                 const banana = new ethers.Contract(BANANAADDRESS, BANANAABI, provider);
                 const tokensOfOwner = await banana.tokensOfOwner(this.account);
                 const bananaNamesOfOwner = await banana.bananaNamesOfOwner(this.account);
@@ -453,6 +467,12 @@
         mounted() {
           if (localStorage.getItem('bananasOwned')) {
             this.bananasOwned = JSON.parse(localStorage.getItem('bananasOwned'));
+          }
+          if (localStorage.getItem('bananaOwners')) {
+            this.owners = JSON.parse(localStorage.getItem('bananaOwners'));
+          }
+          if (localStorage.getItem('bananaNames')) {
+            this.names = JSON.parse(localStorage.getItem('bananaNames'));
           }
           // console.log("mounted: bananasOwned: " + JSON.stringify(this.bananasOwned, null, 2));
           // hljs.highlightAll();
